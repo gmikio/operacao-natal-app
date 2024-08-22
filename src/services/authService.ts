@@ -13,8 +13,14 @@ export const login = async (data: LoginData): Promise<boolean> => {
       },
     });
 
-    // Store token or session data as needed
-    localStorage.setItem('userToken', response.data.token);
+    console.log("response.data = ", response.data)
+    const { name, idn, task } = response.data; 
+
+    // Store session data as needed
+    localStorage.setItem('userToken', "alreadyLogged");
+    localStorage.setItem('userName', name);
+    localStorage.setItem('idn', idn);
+    localStorage.setItem('task', task);
 
     return true;
   } catch (error) {

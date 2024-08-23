@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchTasks } from '../services/taskService';
+import {
+  fetchTask,
+  completeTask,
+  getCompletedTasks,
+  cancelTask,
+  getRanking,
+} from '../services/taskService';
+import Notification from '../components/Notification';
 
 interface Task {
   id: number;
@@ -30,30 +37,88 @@ interface Task {
 
 const Tasks: React.FC = () => {
   const navigate = useNavigate();
-  const [task, setTask] = useState<Task[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [task, setTask] = useState<Task | null>(null);
+  const [completedTasks, setCompletedTasks] = useState<Task[]>([]);
+  const [ranking, setRanking] = useState<any[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
+  const [notification, setNotification] = useState<{ message: string, type: 'success' | 'error' | 'info' } | null>(null);
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(true);
+  const [activeView, setActiveView] = useState<string>('task');
+
   const userName = localStorage.getItem('userName');
-  const idn = localStorage.getItem('idn'); // Retrieve the idn from localStorage
+  const idn = localStorage.getItem('idn');
+  const token = localStorage.getItem('userToken');
 
   useEffect(() => {
-    const token = localStorage.getItem('userToken');
     if (!token || !idn) {
       navigate('/'); // Redirect to login if not authenticated
     } else {
       loadTask(token, idn);
     }
-  }, [navigate, idn]);
+  }, [navigate, idn, token]);
 
   const loadTask = async (token: string, idn: string) => {
+    setLoading(true);
     try {
-      const data = await fetchTasks(token, idn);
+      const data = await fetchTask(token, idn);
       setTask(data); // Store the single task object
     } catch (err) {
       setError('Failed to fetch tasks. Please try again later.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCompleteTask = async () => {
+    try {
+      await completeTask(idn!);
+      setTask(null);
+      setNotification({ message: 'Task completed!', type: 'success' });
+    } catch (err) {
+      console.error(err);
+      setNotification({ message: 'Failed to complete task.', type: 'error' });
+    }
+  };
+
+  const handleGetCompletedTasks = async () => {
+    try {
+      const tasks = await getCompletedTasks(idn!);
+      setCompletedTasks(tasks);
+      setActiveView('completedTasks');
+    } catch (err) {
+      console.error(err);
+      setNotification({
+        message: 'Failed to fetch completed tasks.',
+        type: 'error',
+      });
+    }
+  };
+
+  const handleCancelTask = async () => {
+    try {
+      await cancelTask(idn!);
+      setTask(null);
+      setNotification({ message: 'Task cancelled.', type: 'success' });
+    } catch (err) {
+      console.error(err);
+      setNotification({ message: 'Failed to cancel task.', type: 'error' });
+    }
+  };
+
+  const handleGetRanking = async () => {
+    try {
+      const data = await getRanking();
+      setRanking(data);
+      setActiveView('ranking');
+    } catch (err) {
+      console.error(err);
+      setNotification({ message: 'Failed to fetch ranking.', type: 'error' });
+    }
+  };
+
+  const handleViewTask = () => {
+    setActiveView('task');
   };
 
   const handleLogout = () => {

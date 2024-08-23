@@ -1,8 +1,8 @@
-import { useState, useEffect  } from 'react'
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import reactLogo from './assets/react.svg';
+import viteLogo from '/vite.svg';
+import './App.css';
 
 const App: React.FC = () => {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ const App: React.FC = () => {
       navigate('/'); // Redirect to login if not logged in
     }
   }, [navigate]);
-  
+
   return (
     <div>
       {/* Your main app content */}
@@ -22,4 +22,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App
+export default App;

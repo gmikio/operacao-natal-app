@@ -46,7 +46,10 @@ const Login: React.FC = () => {
         <h2 className="text-2xl font-bold mb-4">Login</h2>
 
         <div className="mb-4">
-          <label htmlFor="idn" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="idn"
+            className="block text-sm font-medium text-gray-700"
+          >
             ID Number
           </label>
           <input
@@ -54,7 +57,9 @@ const Login: React.FC = () => {
             id="idn"
             {...formik.getFieldProps('idn')}
             className={`mt-1 block w-full p-2 border ${
-              formik.touched.idn && formik.errors.idn ? 'border-red-500' : 'border-gray-300'
+              formik.touched.idn && formik.errors.idn
+                ? 'border-red-500'
+                : 'border-gray-300'
             } rounded-md`}
           />
           {formik.touched.idn && formik.errors.idn ? (
@@ -63,7 +68,10 @@ const Login: React.FC = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="userName" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="userName"
+            className="block text-sm font-medium text-gray-700"
+          >
             Username
           </label>
           <input

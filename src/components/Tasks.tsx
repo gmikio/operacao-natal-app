@@ -42,6 +42,8 @@ const Tasks: React.FC = () => {
   const [error, setError] = useState<string>('');
   const [notification, setNotification] = useState<{ message: string, type: 'success' | 'error' | 'info' } | null>(null);
 
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false); // State to manage sidebar visibility
+
   const userName = localStorage.getItem('userName');
   const idn = localStorage.getItem('idn');
   const token = localStorage.getItem('userToken');
@@ -145,7 +147,11 @@ const Tasks: React.FC = () => {
   return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
-      <div className="w-1/4 bg-white p-4 md:p-4 shadow-lg flex flex-col border-r border-gray-300">
+      <div
+        className={`fixed inset-y-0 left-0 transform ${
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        } md:relative md:translate-x-0 w-64 bg-white p-4 shadow-lg flex flex-col border-r border-gray-300 transition-transform duration-300 ease-in-out z-50`}
+      >
         <div className="flex justify-center mb-6">
           <img src={opnIcon} alt="Operação Natal Icon" className="w-24" />
         </div>
@@ -184,7 +190,7 @@ const Tasks: React.FC = () => {
         </button>
         <button
           onClick={handleLogout}
-          className="bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+          className="bg-red-500 text-white py-2 rounded-md hover:bg-red-600 mt-auto"
         >
           Logout
         </button>
@@ -192,6 +198,14 @@ const Tasks: React.FC = () => {
 
       {/* Main Content Area */}
       <div className="flex-1 md:w-3/4 p-4 md:p-6">
+        {/* Toggle Button for Sidebar */}
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="md:hidden fixed bottom-5 right-5 bg-red-500 text-white p-3 rounded-full shadow-lg z-50 focus:outline-none"
+        >
+          <span className="material-icons">menu</span>
+        </button>
+
         {activeView === 'task' && task && (
           <div className="bg-white rounded-lg shadow-lg p-4 md:p-8 text-center">
             <h2 className="text-xl md:text-2xl font-semibold mb-4">Você tem que levar</h2>

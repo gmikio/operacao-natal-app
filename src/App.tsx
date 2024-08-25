@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <div>
       {/* Your main app content */}
-      <h1>Welcome to the Tasks page!</h1>
+      <h1>Bem vindo ao OPN Tasks!</h1>
     </div>
   );
 };

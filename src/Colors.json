@@ -1,0 +1,16 @@
+{    
+    "colors": {
+      "blue": "#1fb6ff",
+      "blue-dark": "#213670",
+      "purple": "#7e5bef",
+      "pink": "#ff49db",
+      "orange": "#ff7849",
+      "green": "#176717",
+      "green-light": "#7ab133",
+      "red":"#a60000",
+      "yellow": "#ffc82c",
+      "gray-dark": "#273444",
+      "gray-light": "#d3dce6",
+      "beige":"#f2e4d8"
+    }
+}

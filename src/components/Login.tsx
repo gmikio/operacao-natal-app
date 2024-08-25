@@ -10,11 +10,11 @@ const Login: React.FC = () => {
   // Validation schema
   const validationSchema = Yup.object({
     idn: Yup.string()
-      .required('ID Number is required')
-      .matches(/^[0-9]+$/, 'ID Number must be numeric'),
+      .required('Campo obrigatório')
+      .matches(/^[0-9]+$/, 'IDN deve conter apenas números'),
     userName: Yup.string()
-      .required('Username is required')
-      .min(3, 'Username must be at least 3 characters'),
+      .required('Nome obrigatório')
+      .min(3, 'Nome deve possuir no mínimo 3 caracteres'),
   });
 
   // Formik setup
@@ -43,14 +43,14 @@ const Login: React.FC = () => {
         onSubmit={formik.handleSubmit}
         className="bg-white p-6 rounded shadow-md w-full max-w-sm"
       >
-        <h2 className="text-2xl font-bold mb-4">Login</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
         <div className="mb-4">
           <label
             htmlFor="idn"
             className="block text-sm font-medium text-gray-700"
           >
-            ID Number
+            IDN
           </label>
           <input
             type="text"
@@ -72,7 +72,7 @@ const Login: React.FC = () => {
             htmlFor="userName"
             className="block text-sm font-medium text-gray-700"
           >
-            Username
+            Nome
           </label>
           <input
             type="text"

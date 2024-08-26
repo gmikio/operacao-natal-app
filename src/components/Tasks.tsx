@@ -55,7 +55,6 @@
         if (!token || !idn) {
         navigate('/'); // Redirect to login if not authenticated
         } else {
-        loadTask(token, idn);
         }
     }, [navigate, idn, token]);
 
